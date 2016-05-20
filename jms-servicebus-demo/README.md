@@ -1,13 +1,13 @@
 ##Using JMS with Azure Service Bus and AMQP 1.0 
 
->Microsoft Azure Service Bus ÊÇÎ¢ÈíÌá¹©µÄÏûÏ¢·şÎñ×ÜÏßÔÆ·şÎñ£¬Ö§³ÖÏûÏ¢¶ÓÁĞ£¬ Ö÷Ìâ¶©ÔÄ£¬µã¶ÔµãÏûÏ¢£¬ Event Hubs¹¦ÄÜ¡£ÀàËÆÓÚJAVAµÄActiveMQµÄ¹¦ÄÜ£¬ Service BusÊÇÖ§³ÖAMQP 1.0Ğ­ÒéµÄ£¬ËùÒÔ»ùÓÚAMQP 1.0Ğ­ÒéÊµÏÖµÄJMS¿Í»§¶Ë¾ù¶¼¿ÉÒÔÁ¬½Ó Service Bus·¢ËÍ½ÓÊÜÏûÏ¢¡£
+>Microsoft Azure Service Bus æ˜¯å¾®è½¯æä¾›çš„æ¶ˆæ¯æœåŠ¡æ€»çº¿äº‘æœåŠ¡ï¼Œæ”¯æŒæ¶ˆæ¯é˜Ÿåˆ—ï¼Œ ä¸»é¢˜è®¢é˜…ï¼Œç‚¹å¯¹ç‚¹æ¶ˆæ¯ï¼Œ Event HubsåŠŸèƒ½ã€‚ç±»ä¼¼äºJAVAçš„ActiveMQçš„åŠŸèƒ½ï¼Œ Service Busæ˜¯æ”¯æŒAMQP 1.0åè®®çš„ï¼Œæ‰€ä»¥åŸºäºAMQP 1.0åè®®å®ç°çš„JMSå®¢æˆ·ç«¯å‡éƒ½å¯ä»¥è¿æ¥ Service Buså‘é€æ¥å—æ¶ˆæ¯ã€‚
 
-±¾ÎÄ½«²ÉÓÃApache Qpid À´Á¬½ÓService Bus µÄÏûÏ¢¶ÓÁĞ£¬¼òµ¥ÊµÏÖÒ»¸ö·¢ËÍ½ÓÊÕÏûÏ¢¶ÓÁĞµÄ¹¦ÄÜ¡£
-Azure ¹ÙÍøÌá¹©µÄÊ¾ÀıºÍÎÄµµ£¬¾ùÊÇÊ¹ÓÃ½Ï¾ÉµÄQpid¿Í»§¶Ë£¬±¾ÎÄ½«Ê¹ÓÃ×îĞÂµÄ Qpid JMS client È¥Á¬½ÓAzure µÄService Bus.
-¿ÉÒÔ´ÓQpid ¹ÙÍøÖĞ£¬¿´³ö×îĞÂµÄQpid JMS client ÊÇÖ§³ÖAMQP1.0Ğ­ÒéµÄ¡£
-![Alt text](./1463585185254.png)
+æœ¬æ–‡å°†é‡‡ç”¨Apache Qpid æ¥è¿æ¥Service Bus çš„æ¶ˆæ¯é˜Ÿåˆ—ï¼Œç®€å•å®ç°ä¸€ä¸ªå‘é€æ¥æ”¶æ¶ˆæ¯é˜Ÿåˆ—çš„åŠŸèƒ½ã€‚
+Azure å®˜ç½‘æä¾›çš„ç¤ºä¾‹å’Œæ–‡æ¡£ï¼Œå‡æ˜¯ä½¿ç”¨è¾ƒæ—§çš„Qpidå®¢æˆ·ç«¯ï¼Œæœ¬æ–‡å°†ä½¿ç”¨æœ€æ–°çš„ Qpid JMS client å»è¿æ¥Azure çš„Service Bus.
+å¯ä»¥ä»Qpid å®˜ç½‘ä¸­ï¼Œçœ‹å‡ºæœ€æ–°çš„Qpid JMS client æ˜¯æ”¯æŒAMQP1.0åè®®çš„ã€‚
+![image](http://oss.arui.me/typecho/2016/05/18/857703302848628.png)
 #### using AMQP with Service Bus Queue
-Ê×ÏÈ£¬ÒıÈëQpid JMS client lib£¬Ê¹ÓÃMavenÅäÖÃÒÀÀµ
+é¦–å…ˆï¼Œå¼•å…¥Qpid JMS client libï¼Œä½¿ç”¨Mavené…ç½®ä¾èµ–
 ```xml
     <dependency>
         <groupId>org.apache.qpid</groupId>
@@ -20,8 +20,8 @@ Azure ¹ÙÍøÌá¹©µÄÊ¾ÀıºÍÎÄµµ£¬¾ùÊÇÊ¹ÓÃ½Ï¾ÉµÄQpid¿Í»§¶Ë£¬±¾ÎÄ½«Ê¹ÓÃ×îĞÂµÄ Qpid JMS 
         <version>1.7.5</version>
     </dependency>
 ```
-»òÕß¹ÙÍøÏÂÔØQpidµÄ°ü https://qpid.apache.org/releases/qpid-jms-0.9.0/
-Æä´Î£¬ ´´½¨jndi.properties ÅäÖÃÎÄ¼ş£º
+æˆ–è€…å®˜ç½‘ä¸‹è½½Qpidçš„åŒ… https://qpid.apache.org/releases/qpid-jms-0.9.0/
+å…¶æ¬¡ï¼Œ åˆ›å»ºjndi.properties é…ç½®æ–‡ä»¶ï¼š
 ```coffeescript
 # Set the InitialContextFactory class to use
 java.naming.factory.initial = org.apache.qpid.jms.jndi.JmsInitialContextFactory
@@ -32,11 +32,11 @@ connectionfactory.myFactoryLookup = amqps://kevinsb.servicebus.chinacloudapi.cn?
 queue.queue1 = queue1
 topic.topic = topic1
 ```
-ÅäÖÃÎÄ¼şÁ¬½Óºó¿ÉÒÔ¼Ó²ÎÊı£º
-amqp.idleTimeout  : ±íÊ¾¿ÕÏĞÁ¬½ÓtimeoutÊ±¼ä, Ä¬ÈÏÁ¬½ÓµÄÊ±¼äÊÇ30000£¬Azure  Service Bus ÒªÇóµÄ×îµÍÊ±¼äÎª60000¡£
-¸ü¶àÅäÖÃÇë²Î¿¼ https://qpid.apache.org/releases/qpid-jms-0.2.0/docs/index.html
+é…ç½®æ–‡ä»¶è¿æ¥åå¯ä»¥åŠ å‚æ•°ï¼š
+amqp.idleTimeout  : è¡¨ç¤ºç©ºé—²è¿æ¥timeoutæ—¶é—´, é»˜è®¤è¿æ¥çš„æ—¶é—´æ˜¯30000ï¼ŒAzure  Service Bus è¦æ±‚çš„æœ€ä½æ—¶é—´ä¸º60000ã€‚
+æ›´å¤šé…ç½®è¯·å‚è€ƒ https://qpid.apache.org/releases/qpid-jms-0.2.0/docs/index.html
 
-×îĞÂ°æ±¾µÄQpidµÄÊ¹ÓÃºÍÖ®Ç°ÀàËÆ£¬ÒÔÏÂÁ¬½ÓQueueµÄÊ¾Àı´úÂë£º
+æœ€æ–°ç‰ˆæœ¬çš„Qpidçš„ä½¿ç”¨å’Œä¹‹å‰ç±»ä¼¼ï¼Œä»¥ä¸‹è¿æ¥Queueçš„ç¤ºä¾‹ä»£ç ï¼š
 ```java
 private static final String USER = "RootManageSharedAccessKey";
 private static final String PASSWORD = "your key";
@@ -86,24 +86,24 @@ private static final String PASSWORD = "your key";
  }
  ```
 #### using AMQP with Service Bus Topic
- JMS API with AMQP 1.0 ÊÇ²»Ö§³ÖService bus µÄtopic subscrptions
-ÒÔÏÂÊÇÎ¢Èí¹Ù·½ÎÄµµÖĞÁĞ³öµÄ ÊÜÏŞ»òÕß²»Ö§³ÖÌØĞÔ
-![Alt text](./1463585634270.png)
+ JMS API with AMQP 1.0 æ˜¯ä¸æ”¯æŒService bus çš„topic subscrptions
+ä»¥ä¸‹æ˜¯å¾®è½¯å®˜æ–¹æ–‡æ¡£ä¸­åˆ—å‡ºçš„ å—é™æˆ–è€…ä¸æ”¯æŒç‰¹æ€§
+![image](http://oss.arui.me/typecho/2016/05/18/857711232994156.png)
 
-#### ÈçºÎ¹¹½¨ÎÈ½¡µÄ³ÌĞò
-JMS¹æ·¶¶¨ÒåÁËÈçºÎ±àĞ´²¶»ñJMSÒì³£µÄ·½·¨£¬ÕâÀïÓĞ¼¸µãĞèÒª×¢Òâ£¬Ê¾Àı´úÂëÖĞÖ»ÊÇ¼òµ¥ÊµÏÖ£¬²¢Î´ÊµÏÖ¶ÔÒì³£µÄ´¦Àí¡£
-	1. ×¢²á ExceptionListener£¬ JMS¹æ·¶¹æ¶¨¿ÉÒÔ¶Ô JMS connection ×¢²áÒì³£¼àÌıÆ÷£¬ÕâÑù¿Í»§¶Ë¾Í¿ÉÒÔ¼àÌıÁ¬½ÓÊÇ·ñÕı³££¬ÕâÑù¿ª·¢Õß¾Í¿ÉÒÔÅĞ¶ÏÊÇ·ñĞèÒªÖØĞÂ´´½¨connection £¬ Session£¬ MessageProducer and MessageConsumer¡£
-	2. ÑéÖ¤ÏûÏ¢ÊÇ·ñ·¢ËÍ³É¹¦¡£È·±£ÒÑ¾­ÅäÖÃqpid.sync_publish Õâ¸öÏµÍ³ÊôĞÔ¡£ÉèÖÃÕâ¸öÊôĞÔÖ®ºó£¬³ÌĞòÔÚ·¢ËÍÏûÏ¢ºó£¬»áµÈ´ı·¢ËÍ½á¹û·´À¡ºó²Å·µ»Ø£¬Èç¹ûÓĞÒì³£³öÏÖ£¬³ÌĞò½«»áÅ×³öJMSException¡£´¥·¢Òì³£µÄÍ¨³£ÊÇÒÔÏÂÁ½ÖÖÇé¿ö£º
-		¡ğ Service bus ¾Ü¾ø·¢ËÍµÄÏûÏ¢£¬»á·´À¡MessageRejectedExceptionÒì³£¡£Õâ¸öÏûÏ¢½«»á±»Service BusºöÂÔ¡£
-		¡ğ Èç¹ûService bus ¹Ø±ÕÁËJMSµÄÁ¬½Ó£¬»á·´À¡InvalidDestinationException Òì³£¡£ÕâÊ±¾ÍĞèÒªÖØĞÂ´´½¨Á¬½Ó£¬²¢ÖØĞÂ·¢ËÍÏûÏ¢¡£
+#### å¦‚ä½•æ„å»ºç¨³å¥çš„ç¨‹åº
+JMSè§„èŒƒå®šä¹‰äº†å¦‚ä½•ç¼–å†™æ•è·JMSå¼‚å¸¸çš„æ–¹æ³•ï¼Œè¿™é‡Œæœ‰å‡ ç‚¹éœ€è¦æ³¨æ„ï¼Œç¤ºä¾‹ä»£ç ä¸­åªæ˜¯ç®€å•å®ç°ï¼Œå¹¶æœªå®ç°å¯¹å¼‚å¸¸çš„å¤„ç†ã€‚
+	1. æ³¨å†Œ ExceptionListenerï¼Œ JMSè§„èŒƒè§„å®šå¯ä»¥å¯¹ JMS connection æ³¨å†Œå¼‚å¸¸ç›‘å¬å™¨ï¼Œè¿™æ ·å®¢æˆ·ç«¯å°±å¯ä»¥ç›‘å¬è¿æ¥æ˜¯å¦æ­£å¸¸ï¼Œè¿™æ ·å¼€å‘è€…å°±å¯ä»¥åˆ¤æ–­æ˜¯å¦éœ€è¦é‡æ–°åˆ›å»ºconnection ï¼Œ Sessionï¼Œ MessageProducer and MessageConsumerã€‚
+	2. éªŒè¯æ¶ˆæ¯æ˜¯å¦å‘é€æˆåŠŸã€‚ç¡®ä¿å·²ç»é…ç½®qpid.sync_publish è¿™ä¸ªç³»ç»Ÿå±æ€§ã€‚è®¾ç½®è¿™ä¸ªå±æ€§ä¹‹åï¼Œç¨‹åºåœ¨å‘é€æ¶ˆæ¯åï¼Œä¼šç­‰å¾…å‘é€ç»“æœåé¦ˆåæ‰è¿”å›ï¼Œå¦‚æœæœ‰å¼‚å¸¸å‡ºç°ï¼Œç¨‹åºå°†ä¼šæŠ›å‡ºJMSExceptionã€‚è§¦å‘å¼‚å¸¸çš„é€šå¸¸æ˜¯ä»¥ä¸‹ä¸¤ç§æƒ…å†µï¼š
+		â—‹ Service bus æ‹’ç»å‘é€çš„æ¶ˆæ¯ï¼Œä¼šåé¦ˆMessageRejectedExceptionå¼‚å¸¸ã€‚è¿™ä¸ªæ¶ˆæ¯å°†ä¼šè¢«Service Buså¿½ç•¥ã€‚
+		â—‹ å¦‚æœService bus å…³é—­äº†JMSçš„è¿æ¥ï¼Œä¼šåé¦ˆInvalidDestinationException å¼‚å¸¸ã€‚è¿™æ—¶å°±éœ€è¦é‡æ–°åˆ›å»ºè¿æ¥ï¼Œå¹¶é‡æ–°å‘é€æ¶ˆæ¯ã€‚
 		
 #### Troubleshoot
-PKIX£ºunable to find valid certification path to requested target
-Çë²Î¼û£º
-	- [Java µ÷ÓÃ Azure HTTPS API Ö¤ÊéÎÊÌâ](http://arui.me/index.php/archives/118/)
-	- [½â¾ö PKIX£ºunable to find valid certification path to requested target\](http://www.arui.me/index.php/archives/69/)
+PKIXï¼šunable to find valid certification path to requested target
+è¯·å‚è§ï¼š
+	- [Java è°ƒç”¨ Azure HTTPS API è¯ä¹¦é—®é¢˜](http://arui.me/index.php/archives/118/)
+	- [è§£å†³ PKIXï¼šunable to find valid certification path to requested target\](http://www.arui.me/index.php/archives/69/)
 
-¸ü¶àÎÄµµ
+æ›´å¤šæ–‡æ¡£
 
 https://azure.microsoft.com/en-us/documentation/articles/service-bus-java-how-to-use-jms-api-amqp/
 
