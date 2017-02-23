@@ -5,15 +5,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 /**
- *
- *
- * using jms with azure service bus
- *
+ * Created by kevin on 2/22/2017.
  */
-public class App {
+public class MessageProducer {
 
     private static final String USER = "RootManageSharedAccessKey";
-    private static final String PASSWORD = "n6Kh4vcfEpSjD0oAZrmPtNF1oFEoVLsOra4FB4c36UM=";
+    private static final String PASSWORD = "/zYwYatlKh02HrN5TcU8QN0uPq4AW6lFX/C2EqlKT2s=";
 
     public static void main(String[] args) throws Exception {
         try {
@@ -27,23 +24,11 @@ public class App {
             connection.start();
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            MessageConsumer consumer = session.createConsumer(destination);
-            consumer.setMessageListener(new MessageListener() {
-                public void onMessage(Message message) {
-                    TextMessage receivedMessage = (TextMessage) message;
-                    try {
-                        System.out.println(receivedMessage.getText());
-                    } catch (JMSException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            MessageProducer messageProducer = session.createProducer(destination);
-            TextMessage message = session.createTextMessage("Hello world!");
-            messageProducer.send(message);
-            Thread.sleep(100000);
+            for (int i = 0; i < 2; i++) {
+                javax.jms.MessageProducer messageProducer = session.createProducer(destination);
+                TextMessage message = session.createTextMessage(i + " Hello world!");
+                messageProducer.send(message);
+            }
             connection.close();
         } catch (Exception exp) {
             System.out.println("Caught exception, exiting.");
@@ -59,5 +44,4 @@ public class App {
             System.exit(1);
         }
     }
-
 }

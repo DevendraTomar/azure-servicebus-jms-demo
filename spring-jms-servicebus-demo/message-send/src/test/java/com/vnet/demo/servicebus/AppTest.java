@@ -1,11 +1,11 @@
-package com.vnet.demo.jms.servicebus;
+package com.vnet.demo.servicebus;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple MessageRecevier.
+ * Unit test for simple App.
  */
 public class AppTest 
     extends TestCase
